@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Arms Trade</title>
+
+
+<script src="js/d3.v3.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script src="js/datamaps.world.min.js"></script>
+<!-- 
+<script src="js/jquery.min.js"></script>-->
+
+<style type="text/css">
+.datamaps-subunit {
+	cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<button onclick="zoomEurope();">Europe</button>
+<button onclick="zoomAsia();">Asia</button>
+
+
+<div id="map" style="position: relative; width: 1000px; height: 800px;"></div>
+<script>
+
+/* zooom
+ * 
+ http://techslides.com/demos/d3/d3-worldmap-boilerplate.html
+ */
+
+var countries = {
+	DE: {
+		 latitude: 51,
+         longitude: 9
+	},
+	AE: {
+		latitude: 23.424076,
+		longitude: 53.847818,
+	},
+	BR: {
+		latitude: -51.92528,
+		longitude: -14235004,
+	}
+};
+
+function drawArc(fromCountry, toCountry) {
+	 map.arc([ { origin: countries[ fromCountry ], destination: countries[ toCountry ] } ]);
+	 
+}
+
+function zoomEurope() {
+	
+   	
+	d3.select('.datamaps-subunit .USA').each(function() {
+		
+	var bbox = this.getBBox(),
+	centroid = [bbox.x + bbox.width/2, bbox.y + bbox.height/2],
+    zoomScaleFactor = baseWidth / bbox.width,
+    zoomX = -centroid[0],
+    zoomY = -centroid[1];
+
+	// set a transform on the parent group element
+	d3.select('.datamaps-subunits').attr("transform", "scale(" + zoomScaleFactor + ")" + "translate(" + zoomX + "," + zoomY + ")");
+	
+	});
+}
+function setCountryColor(country, color) {
+	map.updateChoropleth({
+	    USA: colors(Math.random() * 10)	
+	});
+}
+
+
+	var baseWidth = 1000;
+	var colors = d3.scale.category10();
+    var map = new Datamap({
+    	element: document.getElementById('map'),
+    	fills: {
+    	    defaultFill: "#ABDDA4",
+    	    authorHasTraveledTo: "#fa0fa0"
+    	  },
+    data: {
+        USA: { fillKey: "authorHasTraveledTo" },
+        JPN: { fillKey: "authorHasTraveledTo" },
+        ITA: { fillKey: "authorHasTraveledTo" },
+        CRI: { fillKey: "authorHasTraveledTo" },
+        KOR: { fillKey: "authorHasTraveledTo" },
+        DEU: { fillKey: "authorHasTraveledTo" },
+      }
+    
+    	/*
+    	setProjection: function(element) {
+    	    var projection = d3.geo.equirectangular()
+    	      .center([23, -3])
+    	      .rotate([4.4, 0])
+    	      .scale(400)
+    	      .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+    	    var path = d3.geo.path()
+    	      .projection(projection);
+    	    
+    	    return {path: path, projection: projection};
+    	  }*/
+    });
+    
+    
+    map.svg.selectAll('.datamaps-subunit').on("click", function(d,i) {
+
+    	
+    	var bbox = this.getBBox(),
+        centroid = [bbox.x + bbox.width/2, bbox.y + bbox.height/2],
+        zoomScaleFactor = baseWidth / bbox.width,
+        zoomX = -centroid[0],
+        zoomY = -centroid[1];
+
+    	// set a transform on the parent group element
+    	//d3.select('.datamaps-subunits').attr("transform", "scale(" + zoomScaleFactor + ")" + "translate(" + zoomX + "," + zoomY + ")");
+    	
+    	d3.select(this)
+    		.on("mouseout", function() {} )
+    		.on("mouseover", function() {} )
+    		
+    		.style("fill", "yellow"); });
+    
+    
+    
+    
+    /*
+    map.arc([
+              {
+                  origin: {
+                      latitude: 51,
+                      longitude: 9
+                  },
+                  destination: {
+                      latitude: 40,
+                      longitude: -4
+                  }
+              },
+             
+            ],  {strokeWidth: 2, arcSharpness: 0.4});
+    
+    */
+    
+</script>
+
+</body>
+</html>
