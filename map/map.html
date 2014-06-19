@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- based on http://techslides.com/responsive-d3-map-with-zoom-and-pan-limits/ -->
+<meta charset="utf-8">
+<title>Arms Trade</title>
+<link href="css/map.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+
+	<p><button onclick="zoomEurope();">Europe</button>
+		<button onclick="setYear(2010);">2010</button>
+		<button onclick="setYear(2011);">2011</button>
+		<button onclick="setYear(2012);">2012</button>
+		<button onclick="setYear(2013);">2013</button>
+		
+	</p>
+ 
+  <div id="container"></div>
+
+
+
+<script src="js/d3.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script src="js/armstrade.map.js"></script>
+<script>
+(function() {
+	initMap();
+})();
+
+</script>
+</body>
+</html>
